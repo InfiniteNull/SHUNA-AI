@@ -70,13 +70,19 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base tracking-tight">SHUNA AI Data Engine</h1>
-            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">KELOMPOK 26</span>
+            <span id="headerBatchBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">KELOMPOK 26</span>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">MSIB Batch 6 @ Skilvul • Score 81.8 • Python 3.10 • Scikit-Learn</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-mono" id="headerSub">MSIB Batch 6 @ Skilvul • Score 81.8 • Python 3.10 • Scikit-Learn</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Language Switcher Toggle -->
+        <button id="langToggleBtn" type="button" aria-label="Ganti Bahasa" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1">
+          <i data-lucide="languages" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span id="langLabel">ID</span>
+        </button>
+
         <!-- Dark / Light Theme Toggle -->
         <button id="themeToggleBtn" type="button" aria-label="Toggle Dark Mode" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition">
           <i data-lucide="sun" id="themeIconSun" class="w-4 h-4 hidden"></i>
@@ -86,7 +92,7 @@
         <!-- Hub Portofolio Link -->
         <a href="https://infinitenull.github.io/" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition">
           <i data-lucide="home" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
-          <span>Hub Portofolio ↗</span>
+          <span id="navHubLabel">Hub Portofolio ↗</span>
         </a>
 
         <!-- GitHub Profile Badge -->
@@ -114,8 +120,8 @@
   <!-- Footer -->
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 py-6 text-center text-xs text-slate-500 transition-colors">
     <div class="max-w-7xl mx-auto px-4 space-y-1 font-mono">
-      <p>SHUNA AI — Capstone Project Kelompok 26 • MSIB Batch 6 Kampus Merdeka @ Skilvul</p>
-      <p>© 2026 <a href="https://github.com/InfiniteNull" class="text-emerald-600 dark:text-emerald-400 hover:underline">Rizki Ananda, S.Kom (@InfiniteNull)</a> • Handcrafted with Clean Code & Professional IT Standards.</p>
+      <p id="footerSub1">SHUNA AI — Capstone Project Kelompok 26 • MSIB Batch 6 Kampus Merdeka @ Skilvul</p>
+      <p id="footerSub2">© 2026 <a href="https://github.com/InfiniteNull" class="text-emerald-600 dark:text-emerald-400 hover:underline">Rizki Ananda, S.Kom (@InfiniteNull)</a> • Handcrafted with Clean Code & Professional IT Standards.</p>
     </div>
   </footer>
 
@@ -155,12 +161,49 @@
       }
     }
 
+    // Language Manager
+    window.currentLang = localStorage.getItem('app_lang') || 'id';
+
+    function updateLanguageLabels() {
+      const isEn = window.currentLang === 'en';
+      const langLabel = document.getElementById('langLabel');
+      if (langLabel) langLabel.textContent = isEn ? 'EN' : 'ID';
+
+      const navHubLabel = document.getElementById('navHubLabel');
+      if (navHubLabel) navHubLabel.textContent = isEn ? 'Portfolio Hub ↗' : 'Hub Portofolio ↗';
+
+      const headerBatchBadge = document.getElementById('headerBatchBadge');
+      if (headerBatchBadge) headerBatchBadge.textContent = isEn ? 'GROUP 26' : 'KELOMPOK 26';
+
+      const footerSub1 = document.getElementById('footerSub1');
+      if (footerSub1) footerSub1.textContent = isEn 
+        ? 'SHUNA AI — Capstone Project Group 26 • MSIB Batch 6 Kampus Merdeka @ Skilvul'
+        : 'SHUNA AI — Capstone Project Kelompok 26 • MSIB Batch 6 Kampus Merdeka @ Skilvul';
+    }
+
+    function toggleLanguage() {
+      window.currentLang = window.currentLang === 'id' ? 'en' : 'id';
+      localStorage.setItem('app_lang', window.currentLang);
+      updateLanguageLabels();
+
+      const root = document.getElementById('shunaAiRoot');
+      if (root && typeof window.renderShunaAiSuite === 'function') {
+        window.renderShunaAiSuite(root);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
+      updateLanguageLabels();
 
       const themeToggleBtn = document.getElementById('themeToggleBtn');
       if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', toggleTheme);
+      }
+
+      const langToggleBtn = document.getElementById('langToggleBtn');
+      if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', toggleLanguage);
       }
 
       const root = document.getElementById('shunaAiRoot');

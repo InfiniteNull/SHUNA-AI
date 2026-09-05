@@ -850,6 +850,7 @@
   // --- RENDER MAIN SUITE INTERFACE ---
   window.renderShunaAiSuite = function(container) {
     if (!container) return;
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
 
     if (!state.nlpResult) {
       state.nlpResult = executeNlpPipeline(state.nlpInputText);
@@ -867,7 +868,7 @@
           sentiment: nlp.analysis.sentiment,
           confidence: nlp.analysis.confidence,
           score: nlp.analysis.score,
-          aspects: nlp.analysis.detectedAspects.join(', ') || 'Umum',
+          aspects: nlp.analysis.detectedAspects.join(', ') || (isEn ? 'General' : 'Umum'),
           urgency: nlp.analysis.urgency
         };
       });
@@ -885,7 +886,9 @@
                 SHUNA AI — Machine Learning &amp; NLP Analytics Engine
               </h1>
               <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
-                Platform analitik data terpadu untuk klasifikasi sentimen ulasan pengguna (Scikit-Learn TF-IDF), word cloud leksikal, benchmark multi-model, simulator threshold kurva ROC-AUC, kalkulator retensi tabular, time-series anomaly, dan batch CSV processing.
+                ${isEn
+                  ? "Unified data analytics suite for user review sentiment classification (Scikit-Learn TF-IDF), lexical word clouds, multi-model benchmarking, ROC-AUC threshold simulation, tabular student retention prediction, time-series anomaly tracking, and batch CSV processing."
+                  : "Platform analitik data terpadu untuk klasifikasi sentimen ulasan pengguna (Scikit-Learn TF-IDF), word cloud leksikal, benchmark multi-model, simulator threshold kurva ROC-AUC, kalkulator retensi tabular, time-series anomaly, dan batch CSV processing."}
               </p>
             </div>
 
@@ -894,9 +897,9 @@
                 <i data-lucide="github" class="w-4 h-4"></i>
                 <span>InfiniteNull/SHUNA-AI ↗</span>
               </a>
-              <a href="#home" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center gap-1.5 transition">
+              <a href="https://infinitenull.github.io/" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center gap-1.5 transition">
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                <span>Kembali</span>
+                <span>${isEn ? "Back" : "Kembali"}</span>
               </a>
             </div>
           </div>
@@ -905,37 +908,37 @@
           <div class="flex flex-wrap items-center gap-2 border-t border-slate-100 dark:border-slate-800 pt-4 font-mono text-xs">
             <button type="button" onclick="window.setShunaTab('nlp-studio')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'nlp-studio' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-              <span>1. NLP &amp; Slang Studio</span>
+              <span>${isEn ? "1. NLP & Slang Studio" : "1. NLP & Slang Studio"}</span>
             </button>
 
             <button type="button" onclick="window.setShunaTab('wordcloud-aspects')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'wordcloud-aspects' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
-              <span>2. Word Cloud &amp; Bigrams</span>
+              <span>${isEn ? "2. Word Cloud & Bigrams" : "2. Word Cloud & Bigrams"}</span>
             </button>
 
             <button type="button" onclick="window.setShunaTab('ml-arena')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'ml-arena' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-              <span>3. Model Arena &amp; ROC Curve</span>
+              <span>${isEn ? "3. Model Arena & ROC" : "3. Model Arena & ROC"}</span>
             </button>
 
             <button type="button" onclick="window.setShunaTab('retention-predictor')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'retention-predictor' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-              <span>4. Tabular ML Predictor</span>
+              <span>${isEn ? "4. Tabular ML Predictor" : "4. Tabular ML Predictor"}</span>
             </button>
 
             <button type="button" onclick="window.setShunaTab('timeseries-anomaly')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'timeseries-anomaly' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-              <span>5. Time-Series &amp; Anomaly</span>
+              <span>${isEn ? "5. Time-Series & Anomaly" : "5. Runtun Waktu & Anomali"}</span>
             </button>
 
             <button type="button" onclick="window.setShunaTab('batch-ingestion')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'batch-ingestion' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="file-up" class="w-3.5 h-3.5"></i>
-              <span>6. Batch CSV Processing</span>
+              <span>${isEn ? "6. Batch CSV Processing" : "6. Batch Ingesti CSV"}</span>
             </button>
 
             <button type="button" onclick="window.setShunaTab('architecture-docs')" class="shuna-tab-btn px-3.5 py-2 rounded-lg font-semibold flex items-center gap-2 transition ${state.activeTab === 'architecture-docs' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm' : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
               <i data-lucide="file-code-2" class="w-3.5 h-3.5"></i>
-              <span>7. Formula &amp; Arsitektur</span>
+              <span>${isEn ? "7. Math & Architecture" : "7. Formula & Arsitektur"}</span>
             </button>
           </div>
         </div>
@@ -954,6 +957,7 @@
 
   // --- TAB 1: NLP & SLANG STUDIO ---
   function renderNlpStudioTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     const res = state.nlpResult;
     const a = res.analysis;
 
@@ -976,12 +980,12 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="terminal" class="w-4 h-4 text-sky-500"></i>
-                <span>Live NLP Text Testing Sandbox</span>
+                <span>${isEn ? "Live NLP Text Testing Sandbox" : "Live Sandbox Pengujian Teks NLP"}</span>
               </h2>
               
               <!-- Model Switcher Selector -->
               <div class="flex items-center gap-1.5 text-xs font-mono">
-                <span class="text-slate-500 text-[11px]">Active Engine:</span>
+                <span class="text-slate-500 text-[11px]">${isEn ? "Active Engine:" : "Model Aktif:"}</span>
                 <select onchange="window.setNlpModel(this.value)" class="px-2 py-1 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus:outline-none text-[11px]">
                   <option value="logreg" ${state.selectedModel === 'logreg' ? 'selected' : ''}>Logistic Regression (93.5%)</option>
                   <option value="svm" ${state.selectedModel === 'svm' ? 'selected' : ''}>Linear SVM (94.0%)</option>
@@ -996,8 +1000,8 @@
               <div class="flex items-center gap-2">
                 <i data-lucide="sparkles" class="w-4 h-4 text-sky-600 dark:text-sky-400"></i>
                 <div>
-                  <span class="font-bold text-slate-900 dark:text-white">Indonesian Slang &amp; Typo Normalizer</span>
-                  <p class="text-[11px] text-slate-500">Mengonversi singkatan/bahasa gaul ID (bgt ➔ sangat, lemot ➔ lambat, mantul ➔ mantap)</p>
+                  <span class="font-bold text-slate-900 dark:text-white">${isEn ? "Indonesian Slang & Typo Normalizer" : "Normalisasi Bahasa Gaul & Typo ID"}</span>
+                  <p class="text-[11px] text-slate-500">${isEn ? "Converts informal ID abbreviations/slang (bgt ➔ sangat, lemot ➔ lambat, mantul ➔ mantap)" : "Mengonversi singkatan/bahasa gaul ID (bgt ➔ sangat, lemot ➔ lambat, mantul ➔ mantap)"}</p>
                 </div>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
@@ -1008,7 +1012,7 @@
 
             <!-- Preset Buttons -->
             <div class="space-y-1.5">
-              <label class="text-[11px] font-mono text-slate-500 uppercase tracking-wider">Pilih Preset Review Nyata (ID &amp; EN):</label>
+              <label class="text-[11px] font-mono text-slate-500 uppercase tracking-wider">${isEn ? "Select Real Review Preset (ID & EN):" : "Pilih Preset Review Nyata (ID & EN):"}</label>
               <div class="flex flex-wrap gap-1.5">
                 <button type="button" onclick="window.applyNlpPreset(1)" class="px-2.5 py-1 rounded text-xs bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition">
                   ⭐ Positive Mentorship (EN)
@@ -1017,20 +1021,20 @@
                   ⚠️ Critical Video Glitch (EN)
                 </button>
                 <button type="button" onclick="window.applyNlpPreset(3)" class="px-2.5 py-1 rounded text-xs bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition">
-                  🇮🇩 Review Positif Mantap
+                  🇮🇩 ${isEn ? "Positive Review (ID)" : "Review Positif Mantap"}
                 </button>
                 <button type="button" onclick="window.applyNlpPreset(4)" class="px-2.5 py-1 rounded text-xs bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition">
-                  🇮🇩 Bahasa Gaul &amp; Slang ("bgt lemot parah")
+                  🇮🇩 ${isEn ? 'Slang Review ("bgt lemot parah")' : 'Bahasa Gaul & Slang ("bgt lemot parah")'}
                 </button>
               </div>
             </div>
 
             <!-- Text Area Input -->
             <div class="space-y-2">
-              <textarea id="nlpTextInput" rows="4" oninput="window.updateNlpInput(this.value)" placeholder="Ketik kalimat ulasan dalam bahasa Indonesia atau Inggris untuk diuji secara real-time..." class="w-full p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-sky-500/50 leading-relaxed">${state.nlpInputText}</textarea>
+              <textarea id="nlpTextInput" rows="4" oninput="window.updateNlpInput(this.value)" placeholder="${isEn ? "Type review text in Indonesian or English to test in real-time..." : "Ketik kalimat ulasan dalam bahasa Indonesia atau Inggris untuk diuji secara real-time..."}" class="w-full p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-sky-500/50 leading-relaxed">${state.nlpInputText}</textarea>
               
               <div class="flex items-center justify-between text-[11px] font-mono text-slate-500">
-                <span>Panjang Karakter: ${state.nlpInputText.length} | Kata: ${state.nlpInputText.trim().split(/\s+/).filter(Boolean).length}</span>
+                <span>${isEn ? `Character Length: ${state.nlpInputText.length} | Words: ${state.nlpInputText.trim().split(/\s+/).filter(Boolean).length}` : `Panjang Karakter: ${state.nlpInputText.length} | Kata: ${state.nlpInputText.trim().split(/\s+/).filter(Boolean).length}`}</span>
                 <span class="text-emerald-500">✓ In-Memory Latency: ~${MODEL_SPECS[state.selectedModel].latency}</span>
               </div>
             </div>
@@ -1038,14 +1042,14 @@
             <!-- Step-by-Step NLP Pipeline Visualizer -->
             <div class="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
               <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider font-mono">
-                Transparansi Pipeline Pemrosesan Teks (NLP Steps):
+                ${isEn ? "Text Processing Pipeline Transparency (NLP Steps):" : "Transparansi Pipeline Pemrosesan Teks (NLP Steps):"}
               </h3>
 
               <!-- Slang Normalization Step (if active) -->
               ${state.enableSlangNormalizer && res.slangInfo.convertedPairs.length > 0 ? `
                 <div class="p-3 rounded-lg bg-sky-50/50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 text-xs space-y-1.5">
                   <div class="flex items-center justify-between text-sky-700 dark:text-sky-300 font-mono text-[10px]">
-                    <span>1. Slang Normalization (${res.slangInfo.convertedPairs.length} kata disesuaikan)</span>
+                    <span>${isEn ? `1. Slang Normalization (${res.slangInfo.convertedPairs.length} words mapped)` : `1. Slang Normalization (${res.slangInfo.convertedPairs.length} kata disesuaikan)`}</span>
                     <span>Slang Lexicon Mapped</span>
                   </div>
                   <div class="flex flex-wrap gap-1.5 text-[11px]">
@@ -1057,7 +1061,7 @@
               <!-- Step: Normalization -->
               <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs space-y-1">
                 <div class="flex items-center justify-between text-slate-500 font-mono text-[10px]">
-                  <span>2. Normalisasi &amp; Lowercase (RegEx Clean)</span>
+                  <span>${isEn ? "2. Normalization & Lowercase (RegEx Clean)" : "2. Normalisasi & Lowercase (RegEx Clean)"}</span>
                   <span class="text-sky-500">Punctuation &amp; URLs Removed</span>
                 </div>
                 <div class="font-mono text-slate-800 dark:text-slate-200 text-[11px] break-all">
@@ -1068,20 +1072,20 @@
               <!-- Step: Tokenization & Stopwords -->
               <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs space-y-2">
                 <div class="flex items-center justify-between text-slate-500 font-mono text-[10px]">
-                  <span>3. Tokenisasi &amp; Stopword Filtering (ID + EN Lexicon)</span>
-                  <span>${res.retained.length} Fitur Terpilih | ${res.removed.length} Stopwords Dibuang</span>
+                  <span>${isEn ? "3. Tokenization & Stopword Filtering (ID + EN Lexicon)" : "3. Tokenisasi & Stopword Filtering (ID + EN Lexicon)"}</span>
+                  <span>${isEn ? `${res.retained.length} Selected Features | ${res.removed.length} Stopwords Filtered` : `${res.retained.length} Fitur Terpilih | ${res.removed.length} Stopwords Dibuang`}</span>
                 </div>
                 
                 <div class="space-y-1.5">
-                  <div class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400">Tokens Disimpan (Feature Candidates):</div>
+                  <div class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400">${isEn ? "Retained Tokens (Feature Candidates):" : "Tokens Disimpan (Feature Candidates):"}</div>
                   <div class="flex flex-wrap gap-1">
-                    ${res.retained.length > 0 ? res.retained.map(t => `<span class="px-2 py-0.5 rounded bg-emerald-100/70 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-mono text-[10px] border border-emerald-200 dark:border-emerald-800">${t}</span>`).join('') : '<span class="text-slate-400 text-[10px]">Tidak ada token valid tersisa</span>'}
+                    ${res.retained.length > 0 ? res.retained.map(t => `<span class="px-2 py-0.5 rounded bg-emerald-100/70 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-mono text-[10px] border border-emerald-200 dark:border-emerald-800">${t}</span>`).join('') : `<span class="text-slate-400 text-[10px]">${isEn ? "No valid tokens remaining" : "Tidak ada token valid tersisa"}</span>`}
                   </div>
                 </div>
 
                 ${res.removed.length > 0 ? `
                   <div class="space-y-1 pt-1">
-                    <div class="text-[10px] font-mono text-slate-400">Stopwords Dihapus:</div>
+                    <div class="text-[10px] font-mono text-slate-400">${isEn ? "Removed Stopwords:" : "Stopwords Dihapus:"}</div>
                     <div class="flex flex-wrap gap-1">
                       ${res.removed.map(t => `<span class="px-1.5 py-0.5 rounded bg-slate-200/50 dark:bg-slate-800 text-slate-500 line-through font-mono text-[10px]">${t}</span>`).join('')}
                     </div>
@@ -1102,7 +1106,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h2 class="text-base font-bold text-slate-900 dark:text-white">
-                  Hasil Klasifikasi Model
+                  ${isEn ? "Model Classification Result" : "Hasil Klasifikasi Model"}
                 </h2>
                 <span class="text-[10px] font-mono text-slate-500">${a.modelUsed}</span>
               </div>
@@ -1112,7 +1116,7 @@
             <!-- Probability Bars -->
             <div class="space-y-3">
               <div class="flex items-center justify-between text-xs font-mono">
-                <span class="text-slate-500">Distribusi Probabilitas Softmax:</span>
+                <span class="text-slate-500">${isEn ? "Softmax Probability Distribution:" : "Distribusi Probabilitas Softmax:"}</span>
                 <span class="font-bold text-slate-900 dark:text-white">Margin: ${a.score > 0 ? '+' : ''}${a.score}</span>
               </div>
 
@@ -1153,28 +1157,28 @@
             <!-- Triage & Detected Aspects -->
             <div class="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <div class="space-y-1">
-                <div class="text-[11px] font-mono text-slate-500">Triage &amp; Prioritas Tindak Lanjut:</div>
+                <div class="text-[11px] font-mono text-slate-500">${isEn ? "Triage & Follow-up Priority:" : "Triage & Prioritas Tindak Lanjut:"}</div>
                 <span class="px-3 py-1.5 rounded-lg text-xs font-semibold inline-block border ${a.urgencyBadgeClass}">
                   ${a.urgency}
                 </span>
               </div>
 
               <div class="space-y-1.5">
-                <div class="text-[11px] font-mono text-slate-500">Aspek / Kategori Domain Terdeteksi:</div>
+                <div class="text-[11px] font-mono text-slate-500">${isEn ? "Detected Domain Aspects / Entities:" : "Aspek / Kategori Domain Terdeteksi:"}</div>
                 <div class="flex flex-wrap gap-1.5">
                   ${a.detectedAspects.length > 0 ? a.detectedAspects.map(asp => `
                     <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-purple-50 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 flex items-center gap-1">
                       <i data-lucide="tag" class="w-3 h-3"></i>
                       ${asp}
                     </span>
-                  `).join('') : '<span class="text-xs text-slate-400 italic">Aspek umum (tanpa entitas spesifik)</span>'}
+                  `).join('') : `<span class="text-xs text-slate-400 italic">${isEn ? "General aspects (no specific entity)" : "Aspek umum (tanpa entitas spesifik)"}</span>`}
                 </div>
               </div>
             </div>
 
             <!-- Top Influential Features -->
             <div class="space-y-2 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <div class="text-[11px] font-mono text-slate-500">Fitur Berbobot Signifikan (TF-IDF Weights):</div>
+              <div class="text-[11px] font-mono text-slate-500">${isEn ? "Significant Weighted Features (TF-IDF Weights):" : "Fitur Berbobot Signifikan (TF-IDF Weights):"}</div>
               ${a.matchedFeatures.length > 0 ? `
                 <div class="space-y-1.5">
                   ${a.matchedFeatures.map(f => `
@@ -1189,7 +1193,7 @@
                 </div>
               ` : `
                 <div class="p-3 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 italic text-center">
-                  Kalimat menggunakan kosakata umum dengan bobot netral.
+                  ${isEn ? "Sentence uses common vocabulary with neutral sentiment weight." : "Kalimat menggunakan kosakata umum dengan bobot netral."}
                 </div>
               `}
             </div>
@@ -1204,6 +1208,7 @@
 
   // --- TAB 2: WORD CLOUD & BIGRAMS VISUALIZER ---
   function renderWordCloudTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     const f = state.wordCloudFilter;
     let activeWords = [];
     let isBigram = f === 'bigram';
@@ -1221,24 +1226,24 @@
             <div class="space-y-1">
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="cloud" class="w-4 h-4 text-sky-500"></i>
-                <span>Lexical Word Cloud &amp; N-Gram Frequency Studio</span>
+                <span>${isEn ? "Lexical Word Cloud & N-Gram Frequency Studio" : "Studio Frekuensi Word Cloud & N-Gram Leksikal"}</span>
               </h2>
-              <p class="text-xs text-slate-500">Visualisasi sebaran bobot kata kunci TF-IDF dan bigram dominan dari korpus ulasan:</p>
+              <p class="text-xs text-slate-500">${isEn ? "TF-IDF keyword weight and dominant bigram distribution visualization from the review corpus:" : "Visualisasi sebaran bobot kata kunci TF-IDF dan bigram dominan dari korpus ulasan:"}</p>
             </div>
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
               <button type="button" onclick="window.setWordCloudFilter('positive')" class="px-3 py-1.5 rounded-lg font-semibold transition ${f === 'positive' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
-                Positive Lexicon
+                ${isEn ? "Positive Lexicon" : "Leksikon Positif"}
               </button>
               <button type="button" onclick="window.setWordCloudFilter('negative')" class="px-3 py-1.5 rounded-lg font-semibold transition ${f === 'negative' ? 'bg-rose-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
-                Negative Lexicon
+                ${isEn ? "Negative Lexicon" : "Leksikon Negatif"}
               </button>
               <button type="button" onclick="window.setWordCloudFilter('all')" class="px-3 py-1.5 rounded-lg font-semibold transition ${f === 'all' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
-                All Clusters
+                ${isEn ? "All Clusters" : "Semua Klaster"}
               </button>
               <button type="button" onclick="window.setWordCloudFilter('bigram')" class="px-3 py-1.5 rounded-lg font-semibold transition ${f === 'bigram' ? 'bg-purple-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}">
-                Bigrams (2-Words)
+                ${isEn ? "Bigrams (2-Words)" : "Bigram (2-Kata)"}
               </button>
             </div>
           </div>
@@ -1270,8 +1275,8 @@
           </div>
 
           <div class="flex items-center justify-between text-xs font-mono text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <span>💡 Tip: Klik kata kunci mana saja untuk mengujinya langsung di NLP Studio Sandbox.</span>
-            <span>Skala Visual: TF-IDF Proportional Sizing</span>
+            <span>${isEn ? "💡 Tip: Click any keyword to test it live in the NLP Studio Sandbox." : "💡 Tip: Klik kata kunci mana saja untuk mengujinya langsung di NLP Studio Sandbox."}</span>
+            <span>${isEn ? "Visual Scale: TF-IDF Proportional Sizing" : "Skala Visual: TF-IDF Proportional Sizing"}</span>
           </div>
 
         </div>
@@ -1282,6 +1287,7 @@
 
   // --- TAB 3: MODEL ARENA & ROC CURVE ---
   function renderMlArenaTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     const cm = computeConfusionMatrixAtThreshold(state.cmThreshold);
     const rocSvg = renderRocCurveSvg(cm);
 
@@ -1294,9 +1300,9 @@
             <div>
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="swords" class="w-4 h-4 text-purple-500"></i>
-                <span>Multi-Model Benchmark Arena (Scikit-Learn Evaluation)</span>
+                <span>${isEn ? "Multi-Model Benchmark Arena (Scikit-Learn Evaluation)" : "Arena Benchmark Multi-Model (Evaluasi Scikit-Learn)"}</span>
               </h2>
-              <p class="text-xs text-slate-500">Evaluasi komparatif 4 arsitektur algoritma machine learning pada korpus validasi:</p>
+              <p class="text-xs text-slate-500">${isEn ? "Comparative evaluation of 4 machine learning algorithm architectures on the validation holdout:" : "Evaluasi komparatif 4 arsitektur algoritma machine learning pada korpus validasi:"}</p>
             </div>
             <span class="text-xs font-mono text-slate-400">20% Holdout Split (N=200)</span>
           </div>
@@ -1306,7 +1312,7 @@
               <div onclick="window.setNlpModel('${key}')" class="p-4 rounded-xl border transition-all cursor-pointer ${state.selectedModel === key ? 'bg-sky-50/70 dark:bg-sky-950/60 border-sky-400 dark:border-sky-700 shadow-sm ring-1 ring-sky-400' : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'}">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-mono font-bold text-slate-900 dark:text-white">${key.toUpperCase()}</span>
-                  ${state.selectedModel === key ? '<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500 text-white font-bold">ACTIVE</span>' : ''}
+                  ${state.selectedModel === key ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500 text-white font-bold">${isEn ? "ACTIVE" : "AKTIF"}</span>` : ''}
                 </div>
                 <div class="text-sm font-bold text-slate-800 dark:text-slate-100 leading-tight mb-2">${m.name.split('(')[0]}</div>
                 <div class="grid grid-cols-2 gap-2 text-[11px] font-mono pt-2 border-t border-slate-200 dark:border-slate-800">
@@ -1362,19 +1368,19 @@
               <div class="flex items-center justify-between">
                 <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <i data-lucide="sliders" class="w-4 h-4 text-sky-500"></i>
-                  <span>Classification Decision Threshold (τ) Simulator</span>
+                  <span>${isEn ? "Classification Decision Threshold (τ) Simulator" : "Simulator Threshold Keputusan Klasifikasi (τ)"}</span>
                 </h3>
                 <span class="text-xs font-mono font-bold text-sky-500">τ = ${cm.tau}</span>
               </div>
-              <p class="text-xs text-slate-500">Geser threshold klasifikasi untuk memantau perubahan trade-off Precision vs Recall &amp; Confusion Matrix:</p>
+              <p class="text-xs text-slate-500">${isEn ? "Adjust classification threshold to observe the Precision vs Recall trade-off & Confusion Matrix shifts:" : "Geser threshold klasifikasi untuk memantau perubahan trade-off Precision vs Recall & Confusion Matrix:"}</p>
             </div>
 
             <!-- Slider Control -->
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 font-mono text-xs">
               <div class="flex justify-between text-slate-600 dark:text-slate-400 text-[11px]">
-                <span>0.10 (High Recall / Sensitive)</span>
+                <span>${isEn ? "0.10 (High Recall / Sensitive)" : "0.10 (Recall Tinggi / Sensitif)"}</span>
                 <span class="font-bold text-sky-500">Threshold: ${cm.tau}</span>
-                <span>0.90 (High Precision / Strict)</span>
+                <span>${isEn ? "0.90 (High Precision / Strict)" : "0.90 (Presisi Tinggi / Ketat)"}</span>
               </div>
               <input type="range" min="0.10" max="0.90" step="0.05" value="${cm.tau}" oninput="window.updateCmThreshold(this.value)" class="w-full accent-sky-500 cursor-pointer" />
             </div>
@@ -1384,25 +1390,25 @@
               <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800">
                 <div class="text-[10px] text-emerald-600 dark:text-emerald-400">TRUE POSITIVE (TP)</div>
                 <div class="text-xl font-extrabold text-emerald-700 dark:text-emerald-300">${cm.tp}</div>
-                <div class="text-[10px] text-slate-400">Actual Pos: ${cm.actualPos}</div>
+                <div class="text-[10px] text-slate-400">${isEn ? `Actual Pos: ${cm.actualPos}` : `Positif Aktual: ${cm.actualPos}`}</div>
               </div>
 
               <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                 <div class="text-[10px] text-slate-500">FALSE NEGATIVE (FN)</div>
                 <div class="text-xl font-extrabold text-slate-700 dark:text-slate-300">${cm.fn}</div>
-                <div class="text-[10px] text-slate-400">Missed Positives</div>
+                <div class="text-[10px] text-slate-400">${isEn ? "Missed Positives" : "Positif Terlewat"}</div>
               </div>
 
               <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                 <div class="text-[10px] text-slate-500">FALSE POSITIVE (FP)</div>
                 <div class="text-xl font-extrabold text-slate-700 dark:text-slate-300">${cm.fp}</div>
-                <div class="text-[10px] text-slate-400">False Alarms</div>
+                <div class="text-[10px] text-slate-400">${isEn ? "False Alarms" : "Alarm Palsu"}</div>
               </div>
 
               <div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800">
                 <div class="text-[10px] text-rose-600 dark:text-rose-400">TRUE NEGATIVE (TN)</div>
                 <div class="text-xl font-extrabold text-rose-700 dark:text-rose-300">${cm.tn}</div>
-                <div class="text-[10px] text-slate-400">Actual Neg: ${cm.actualNeg}</div>
+                <div class="text-[10px] text-slate-400">${isEn ? `Actual Neg: ${cm.actualNeg}` : `Negatif Aktual: ${cm.actualNeg}`}</div>
               </div>
             </div>
 
@@ -1432,6 +1438,7 @@
 
   // --- TAB 4: RETENTION PREDICTOR & DATASET ---
   function renderRetentionPredictorTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     const inp = state.retentionInputs;
     const res = state.retentionResult;
 
@@ -1455,11 +1462,11 @@
             <div class="flex items-center justify-between">
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="sliders" class="w-4 h-4 text-purple-500"></i>
-                <span>Simulator Prediksi Retensi &amp; Dropout Peserta (Tabular Sigmoid)</span>
+                <span>${isEn ? "Participant Retention & Dropout Predictor (Tabular Sigmoid)" : "Simulator Prediksi Retensi & Dropout Peserta (Tabular Sigmoid)"}</span>
               </h2>
               <span class="text-xs font-mono text-purple-500">Sigmoid Logistic Classifier</span>
             </div>
-            <p class="text-xs text-slate-500">Ubah parameter peserta untuk mensimulasikan probabilitas kelulusan vs risiko dropout secara real-time:</p>
+            <p class="text-xs text-slate-500">${isEn ? "Adjust participant parameters to simulate course completion probability vs dropout risk in real-time:" : "Ubah parameter peserta untuk mensimulasikan probabilitas kelulusan vs risiko dropout secara real-time:"}</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
@@ -1473,7 +1480,7 @@
 
             <div class="space-y-1.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <div class="flex justify-between">
-                <span class="text-slate-600 dark:text-slate-400">Progress LMS:</span>
+                <span class="text-slate-600 dark:text-slate-400">${isEn ? "LMS Completion Rate:" : "Progress LMS:"}</span>
                 <span class="font-bold text-emerald-500">${inp.completionRate}%</span>
               </div>
               <input type="range" min="0" max="100" step="5" value="${inp.completionRate}" oninput="window.updateRetentionInput('completionRate', this.value)" class="w-full accent-emerald-500 cursor-pointer" />
@@ -1481,15 +1488,15 @@
 
             <div class="space-y-1.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <div class="flex justify-between">
-                <span class="text-slate-600 dark:text-slate-400">Sesi Mentoring:</span>
-                <span class="font-bold text-purple-500">${inp.mentorSessions} sesi</span>
+                <span class="text-slate-600 dark:text-slate-400">${isEn ? "Mentoring Sessions:" : "Sesi Mentoring:"}</span>
+                <span class="font-bold text-purple-500">${inp.mentorSessions} ${isEn ? "sessions" : "sesi"}</span>
               </div>
               <input type="range" min="0" max="15" step="1" value="${inp.mentorSessions}" oninput="window.updateRetentionInput('mentorSessions', this.value)" class="w-full accent-purple-500 cursor-pointer" />
             </div>
 
             <div class="space-y-1.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <div class="flex justify-between">
-                <span class="text-slate-600 dark:text-slate-400">Nilai Rata-rata Tugas:</span>
+                <span class="text-slate-600 dark:text-slate-400">${isEn ? "Average Assignment Score:" : "Nilai Rata-rata Tugas:"}</span>
                 <span class="font-bold text-amber-500">${inp.assignmentScore} / 100</span>
               </div>
               <input type="range" min="0" max="100" step="2" value="${inp.assignmentScore}" oninput="window.updateRetentionInput('assignmentScore', this.value)" class="w-full accent-amber-500 cursor-pointer" />
@@ -1497,8 +1504,8 @@
 
             <div class="md:col-span-2 space-y-1.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <div class="flex justify-between">
-                <span class="text-slate-600 dark:text-slate-400">Respon SLA Tiket Helpdesk (Latency Penalty):</span>
-                <span class="font-bold text-rose-500">${inp.supportResolutionHours} Jam</span>
+                <span class="text-slate-600 dark:text-slate-400">${isEn ? "Helpdesk SLA Latency Penalty:" : "Respon SLA Tiket Helpdesk (Latency Penalty):"}</span>
+                <span class="font-bold text-rose-500">${inp.supportResolutionHours} ${isEn ? "Hours" : "Jam"}</span>
               </div>
               <input type="range" min="1" max="48" step="1" value="${inp.supportResolutionHours}" oninput="window.updateRetentionInput('supportResolutionHours', this.value)" class="w-full accent-rose-500 cursor-pointer" />
             </div>
@@ -1507,22 +1514,22 @@
           <div class="p-4 rounded-xl border ${res.riskBg} space-y-3">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <div class="text-[10px] font-mono uppercase tracking-wider text-slate-500">Hasil Prediksi Model:</div>
+                <div class="text-[10px] font-mono uppercase tracking-wider text-slate-500">${isEn ? "Model Prediction Tier:" : "Hasil Prediksi Model:"}</div>
                 <div class="text-lg font-bold ${res.riskColor}">${res.riskTier}</div>
               </div>
               <div class="flex items-center gap-4 text-right font-mono">
                 <div>
-                  <div class="text-[10px] text-slate-500">PROB. RETENSI</div>
+                  <div class="text-[10px] text-slate-500">${isEn ? "RETENTION PROB." : "PROB. RETENSI"}</div>
                   <div class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">${res.retentionRate}%</div>
                 </div>
                 <div>
-                  <div class="text-[10px] text-slate-500">RISIKO DROPOUT</div>
+                  <div class="text-[10px] text-slate-500">${isEn ? "DROPOUT RISK" : "RISIKO DROPOUT"}</div>
                   <div class="text-xl font-extrabold text-rose-600 dark:text-rose-400">${res.churnRisk}%</div>
                 </div>
               </div>
             </div>
             <div class="pt-2 border-t border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-              <strong>Rekomendasi Aksi:</strong> ${res.recommendation}
+              <strong>${isEn ? "Actionable Recommendation:" : "Rekomendasi Aksi:"}</strong> ${res.recommendation}
             </div>
           </div>
         </div>
@@ -1533,16 +1540,16 @@
             <div>
               <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="database" class="w-4 h-4 text-sky-500"></i>
-                <span>Dataset Explorer: Sentiment &amp; Feedback Corpus</span>
+                <span>${isEn ? "Dataset Explorer: Sentiment & Feedback Corpus" : "Dataset Explorer: Korpus Ulasan & Sentimen"}</span>
               </h3>
-              <p class="text-xs text-slate-500">Sampel data riil dari <code>data/sentiment-data.csv</code> (${filteredData.length} baris):</p>
+              <p class="text-xs text-slate-500">${isEn ? `Authentic data sample from data/sentiment-data.csv (${filteredData.length} rows):` : `Sampel data riil dari data/sentiment-data.csv (${filteredData.length} baris):`}</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
-              <input type="text" placeholder="Cari ulasan..." value="${state.datasetFilter.search}" oninput="window.updateDatasetFilter('search', this.value)" class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none" />
+              <input type="text" placeholder="${isEn ? "Search reviews..." : "Cari ulasan..."}" value="${state.datasetFilter.search}" oninput="window.updateDatasetFilter('search', this.value)" class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none" />
               
               <select onchange="window.updateDatasetFilter('sentiment', this.value)" class="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none">
-                <option value="all" ${state.datasetFilter.sentiment === 'all' ? 'selected' : ''}>Semua Sentimen</option>
+                <option value="all" ${state.datasetFilter.sentiment === 'all' ? 'selected' : ''}>${isEn ? "All Sentiments" : "Semua Sentimen"}</option>
                 <option value="positive" ${state.datasetFilter.sentiment === 'positive' ? 'selected' : ''}>Positive</option>
                 <option value="negative" ${state.datasetFilter.sentiment === 'negative' ? 'selected' : ''}>Negative</option>
                 <option value="neutral" ${state.datasetFilter.sentiment === 'neutral' ? 'selected' : ''}>Neutral</option>
@@ -1555,11 +1562,11 @@
               <thead class="bg-slate-50 dark:bg-slate-950/80 text-slate-500 font-mono border-b border-slate-200 dark:border-slate-800 text-[11px]">
                 <tr>
                   <th class="p-3">#</th>
-                  <th class="p-3">Teks Feedback</th>
-                  <th class="p-3">Sentimen</th>
+                  <th class="p-3">${isEn ? "Feedback Text" : "Teks Feedback"}</th>
+                  <th class="p-3">${isEn ? "Sentiment" : "Sentimen"}</th>
                   <th class="p-3">Confidence</th>
                   <th class="p-3">Provider</th>
-                  <th class="p-3 text-right">Aksi</th>
+                  <th class="p-3 text-right">${isEn ? "Action" : "Aksi"}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-sans">
@@ -1576,7 +1583,7 @@
                     <td class="p-3 font-mono text-slate-500 text-[11px]">${row.source}</td>
                     <td class="p-3 text-right">
                       <button type="button" onclick="window.testDatasetRow(${row.id})" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[10px] border border-slate-200 dark:border-slate-700 transition">
-                        Uji di NLP ➔
+                        ${isEn ? "Test in NLP ➔" : "Uji di NLP ➔"}
                       </button>
                     </td>
                   </tr>
@@ -1592,6 +1599,7 @@
 
   // --- TAB 5: TIME SERIES & ANOMALY ---
   function renderTimeSeriesTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     const anomalies = computeRollingAnomalies(HISTORICAL_TIMESERIES, 7, state.anomalyThreshold);
     const forecasts = forecastFutureDays(HISTORICAL_TIMESERIES, state.forecastDays, state.forecastModel);
     const svgChart = renderTimeSeriesSvg(anomalies, forecasts);
@@ -1605,9 +1613,9 @@
             <div>
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="line-chart" class="w-4 h-4 text-sky-500"></i>
-                <span>Time-Series Feedback Volume &amp; Anomaly Tracking</span>
+                <span>${isEn ? "Time-Series Feedback Volume & Anomaly Tracking" : "Runtun Waktu Volume Feedback & Pelacakan Anomali"}</span>
               </h2>
-              <p class="text-xs text-slate-500">Visualisasi 30 hari volume feedback, deteksi lonjakan anomali Z-score, dan proyeksi beban 7 hari ke depan:</p>
+              <p class="text-xs text-slate-500">${isEn ? "30-day feedback volume visualization, rolling Z-score anomaly spike detection, and 7-day workload forecast:" : "Visualisasi 30 hari volume feedback, deteksi lonjakan anomali Z-score, dan proyeksi beban 7 hari ke depan:"}</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-3 text-xs font-mono">
@@ -1640,7 +1648,7 @@
         <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-500"></i>
-            <span>Log Deteksi Anomali Operasional</span>
+            <span>${isEn ? "Operational Anomaly Detection Logs" : "Log Deteksi Anomali Operasional"}</span>
           </h3>
 
           <div class="space-y-3">
@@ -1649,12 +1657,14 @@
                 <div class="flex items-center justify-between font-mono">
                   <span class="font-bold text-rose-700 dark:text-rose-300 flex items-center gap-1.5">
                     <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-rose-500"></i>
-                    ${item.date} — Lonjakan Kritik Z=${item.zScore}
+                    ${item.date} — ${isEn ? `Critical Spike Z=${item.zScore}` : `Lonjakan Kritik Z=${item.zScore}`}
                   </span>
-                  <span class="text-rose-600 dark:text-rose-400 font-bold">${item.neg} Feedback Negatif</span>
+                  <span class="text-rose-600 dark:text-rose-400 font-bold">${item.neg} ${isEn ? "Negative Reviews" : "Feedback Negatif"}</span>
                 </div>
                 <p class="text-slate-700 dark:text-slate-300 leading-relaxed font-sans">
-                  <strong>Penyebab Teridentifikasi:</strong> Terjadi lonjakan kritik sebesar <strong>640%</strong> di atas rolling mean (μ=${item.rollingMean}, σ=${item.rollingStd}). Analisis NLP mengidentifikasi keluhan masif terkait video player buffering saat deadline capstone.
+                  <strong>${isEn ? "Identified Root Cause:" : "Penyebab Teridentifikasi:"}</strong> ${isEn
+                    ? `A critical spike of <strong>640%</strong> above the rolling mean (μ=${item.rollingMean}, σ=${item.rollingStd}). NLP feature extraction flagged concentrated complaints regarding video player buffering during capstone deadlines.`
+                    : `Terjadi lonjakan kritik sebesar <strong>640%</strong> di atas rolling mean (μ=${item.rollingMean}, σ=${item.rollingStd}). Analisis NLP mengidentifikasi keluhan masif terkait video player buffering saat deadline capstone.`}
                 </p>
               </div>
             `).join('')}
@@ -1667,6 +1677,7 @@
 
   // --- TAB 6: BATCH CSV INGESTION & EXPORT ---
   function renderBatchIngestionTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     const data = state.batchData;
     const posCount = data.filter(d => d.sentiment === 'positive').length;
     const negCount = data.filter(d => d.sentiment === 'negative').length;
@@ -1690,20 +1701,20 @@
             <div>
               <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="file-up" class="w-4 h-4 text-sky-500"></i>
-                <span>Client-Side Batch CSV Processing &amp; Inference</span>
+                <span>${isEn ? "Client-Side Batch CSV Processing & Inference" : "Pemrosesan & Inferensi Batch CSV di Browser"}</span>
               </h2>
-              <p class="text-xs text-slate-500">Unggah file CSV Anda atau muat dataset ulasan untuk dianalisis seluruhnya secara instan di browser:</p>
+              <p class="text-xs text-slate-500">${isEn ? "Upload your own CSV file or load sample reviews to execute instant multi-row inference client-side:" : "Unggah file CSV Anda atau muat dataset ulasan untuk dianalisis seluruhnya secara instan di browser:"}</p>
             </div>
 
             <div class="flex items-center gap-2">
               <label class="px-3.5 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs flex items-center gap-2 cursor-pointer transition shadow-sm">
                 <i data-lucide="upload" class="w-3.5 h-3.5"></i>
-                <span>Upload CSV File</span>
+                <span>${isEn ? "Upload CSV File" : "Upload File CSV"}</span>
                 <input type="file" accept=".csv" onchange="window.handleCsvUpload(event)" class="hidden" />
               </label>
               <button type="button" onclick="window.exportAnalyzedCsv()" class="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 font-semibold text-xs flex items-center gap-2 transition shadow-sm">
                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                <span>Export CSV Hasil</span>
+                <span>${isEn ? "Export Results CSV" : "Export CSV Hasil"}</span>
               </button>
             </div>
           </div>
@@ -1712,7 +1723,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
             <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <div class="text-[10px] text-slate-500">TOTAL ANALYZED</div>
-              <div class="text-xl font-extrabold text-slate-900 dark:text-white">${data.length} Ulasan</div>
+              <div class="text-xl font-extrabold text-slate-900 dark:text-white">${data.length} ${isEn ? "Reviews" : "Ulasan"}</div>
               <div class="text-[10px] text-emerald-500">100% Processed</div>
             </div>
 
@@ -1740,14 +1751,14 @@
         <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <h3 class="text-sm font-bold text-slate-900 dark:text-white font-mono">
-              Tabel Hasil Batch Inference (${filtered.length} Data)
+              ${isEn ? `Batch Inference Results Table (${filtered.length} Records)` : `Tabel Hasil Batch Inference (${filtered.length} Data)`}
             </h3>
 
             <div class="flex items-center gap-2 text-xs font-mono">
-              <input type="text" placeholder="Filter teks ulasan..." value="${state.batchSearch}" oninput="window.updateBatchSearch(this.value)" class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none" />
+              <input type="text" placeholder="${isEn ? "Filter review text..." : "Filter teks ulasan..."}" value="${state.batchSearch}" oninput="window.updateBatchSearch(this.value)" class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none" />
               
               <select onchange="window.updateBatchFilter(this.value)" class="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none">
-                <option value="all" ${state.batchFilter === 'all' ? 'selected' : ''}>Semua Sentimen</option>
+                <option value="all" ${state.batchFilter === 'all' ? 'selected' : ''}>${isEn ? "All Sentiments" : "Semua Sentimen"}</option>
                 <option value="positive" ${state.batchFilter === 'positive' ? 'selected' : ''}>Positive</option>
                 <option value="negative" ${state.batchFilter === 'negative' ? 'selected' : ''}>Negative</option>
                 <option value="neutral" ${state.batchFilter === 'neutral' ? 'selected' : ''}>Neutral</option>
@@ -1760,11 +1771,11 @@
               <thead class="bg-slate-50 dark:bg-slate-950/80 text-slate-500 font-mono border-b border-slate-200 dark:border-slate-800 text-[11px]">
                 <tr>
                   <th class="p-3">#</th>
-                  <th class="p-3">Teks Ulasan Ingested</th>
-                  <th class="p-3">Sentimen Prediksi</th>
+                  <th class="p-3">${isEn ? "Ingested Review Text" : "Teks Ulasan Ingested"}</th>
+                  <th class="p-3">${isEn ? "Predicted Sentiment" : "Sentimen Prediksi"}</th>
                   <th class="p-3">Confidence</th>
-                  <th class="p-3">Domain Aspect</th>
-                  <th class="p-3">Triage Prioritas</th>
+                  <th class="p-3">${isEn ? "Domain Aspect" : "Aspek Domain"}</th>
+                  <th class="p-3">${isEn ? "Priority Triage" : "Triage Prioritas"}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-sans">
@@ -1793,30 +1804,33 @@
 
   // --- TAB 7: ARCHITECTURE DOCS ---
   function renderArchitectureDocsTab() {
+    const isEn = (window.currentLang || localStorage.getItem('app_lang') || 'id') === 'en';
     return `
       <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8 text-xs sm:text-sm leading-relaxed">
         
         <div class="space-y-3">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400 flex items-center justify-center font-mono font-bold text-xs border border-sky-200 dark:border-sky-800">01</span>
-            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Latar Belakang &amp; Kepemilikan Teknis SHUNA AI</h2>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white">${isEn ? "Background & Technical Authorship of SHUNA AI" : "Latar Belakang & Kepemilikan Teknis SHUNA AI"}</h2>
           </div>
           <p class="text-slate-600 dark:text-slate-400">
-            Proyek <strong>SHUNA AI</strong> dirancang dan dibangun sebagai proyek akhir capstone <strong>Kelompok 26</strong> dalam program <strong>Studi Independen Bersertifikat (MSIB) Batch 6 @ Skilvul (Machine Learning Track)</strong> dengan nilai kelulusan akhir <strong>81.8</strong>. Rizki Ananda bertindak sebagai <strong>Ketua Tim (Lead Developer &amp; Core Architect)</strong> yang memimpin dan mengeksekusi 95%+ implementasi kode serta pipeline teknis secara mandiri mulai dari data preparation, feature engineering TF-IDF, kalibrasi model Logistic Regression, hingga perancangan arsitektur analitik end-to-end.
+            ${isEn
+              ? "The <strong>SHUNA AI</strong> project was engineered and delivered as the final capstone project of <strong>Group 26</strong> in the <strong>Certified Independent Study (MSIB) Batch 6 @ Skilvul (Machine Learning Track)</strong>, achieving a final graduation score of <strong>81.8</strong>. Rizki Ananda served as the <strong>Team Lead (Lead Developer & Core Architect)</strong>, architecting and executing 95%+ of the technical codebase and ML pipelines end-to-end — spanning data preparation, TF-IDF vectorization, Logistic Regression calibration, and full-stack client-side analytics."
+              : "Proyek <strong>SHUNA AI</strong> dirancang dan dibangun sebagai proyek akhir capstone <strong>Kelompok 26</strong> dalam program <strong>Studi Independen Bersertifikat (MSIB) Batch 6 @ Skilvul (Machine Learning Track)</strong> dengan nilai kelulusan akhir <strong>81.8</strong>. Rizki Ananda bertindak sebagai <strong>Ketua Tim (Lead Developer & Core Architect)</strong> yang memimpin dan mengeksekusi 95%+ implementasi kode serta pipeline teknis secara mandiri mulai dari data preparation, feature engineering TF-IDF, kalibrasi model Logistic Regression, hingga perancangan arsitektur analitik end-to-end."}
           </p>
         </div>
 
         <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-mono font-bold text-xs border border-purple-200 dark:border-purple-800">02</span>
-            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Formulasi Matematika: TF-IDF &amp; Logistic Regression</h2>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white">${isEn ? "Mathematical Formulation: TF-IDF & Logistic Regression" : "Formulasi Matematika: TF-IDF & Logistic Regression"}</h2>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-              <h3 class="font-bold text-slate-900 dark:text-white font-mono text-xs text-sky-600 dark:text-sky-400">1. Pembobotan Term Frequency-Inverse Document Frequency (TF-IDF)</h3>
+              <h3 class="font-bold text-slate-900 dark:text-white font-mono text-xs text-sky-600 dark:text-sky-400">${isEn ? "1. Term Frequency-Inverse Document Frequency (TF-IDF)" : "1. Pembobotan Term Frequency-Inverse Document Frequency (TF-IDF)"}</h3>
               <p class="text-slate-600 dark:text-slate-400 text-xs">
-                Mengukur signifikansi relatif suatu kata $t$ dalam dokumen $d$ terhadap seluruh korpus $D$:
+                ${isEn ? "Measures the relative importance of term t in document d against corpus D:" : "Mengukur signifikansi relatif suatu kata t dalam dokumen d terhadap seluruh korpus D:"}
               </p>
               <div class="p-2.5 rounded bg-slate-900 text-slate-100 font-mono text-xs">
                 $$\\text{TF-IDF}(t, d, D) = \\text{TF}(t, d) \\times \\ln\\left(\\frac{1 + |D|}{1 + |\\{d \\in D : t \\in d\\}|}\\right) + 1$$
@@ -1824,9 +1838,9 @@
             </div>
 
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-              <h3 class="font-bold text-slate-900 dark:text-white font-mono text-xs text-purple-600 dark:text-purple-400">2. Klasifikasi Biner &amp; Multikelas via Sigmoid</h3>
+              <h3 class="font-bold text-slate-900 dark:text-white font-mono text-xs text-purple-600 dark:text-purple-400">${isEn ? "2. Binary & Multiclass Classification via Sigmoid" : "2. Klasifikasi Biner & Multikelas via Sigmoid"}</h3>
               <p class="text-slate-600 dark:text-slate-400 text-xs">
-                Memetakan kombinasi linier bobot fitur $z = \\mathbf{w}^T \\mathbf{x} + b$ menjadi probabilitas $[0, 1]$:
+                ${isEn ? "Maps linear combination of feature weights z into probability space [0, 1]:" : "Memetakan kombinasi linier bobot fitur z menjadi probabilitas [0, 1]:"}
               </p>
               <div class="p-2.5 rounded bg-slate-900 text-slate-100 font-mono text-xs">
                 $$\\sigma(z) = \\frac{1}{1 + e^{-z}}, \\quad \\mathcal{L}(\\mathbf{w}) = -\\frac{1}{m}\\sum_{i=1}^m [y^{(i)}\\ln(\\hat{y}^{(i)}) + (1-y^{(i)})\\ln(1-\\hat{y}^{(i)})]$$
@@ -1838,12 +1852,12 @@
         <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono font-bold text-xs border border-emerald-200 dark:border-emerald-800">03</span>
-            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Time-Series Holt-Winters &amp; Rolling Z-Score Anomaly</h2>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white">${isEn ? "Time-Series Holt-Winters & Rolling Z-Score Anomaly" : "Runtun Waktu Holt-Winters & Anomali Rolling Z-Score"}</h2>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
             <p class="text-slate-600 dark:text-slate-400">
-              Model peramalan menerapkan <strong>Double Exponential Smoothing (Holt's Linear Trend)</strong>:
+              ${isEn ? "Forecasting model applies <strong>Double Exponential Smoothing (Holt's Linear Trend)</strong>:" : "Model peramalan menerapkan <strong>Double Exponential Smoothing (Holt's Linear Trend)</strong>:"}
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
               <div class="p-2.5 rounded bg-slate-900 text-emerald-300">Level: $L_t = \\alpha X_t + (1 - \\alpha)(L_{t-1} + T_{t-1})$</div>
