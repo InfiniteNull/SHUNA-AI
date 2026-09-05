@@ -136,8 +136,8 @@ python app/utils/train_and_save_model.py
 ---
 
 ## Live Platform
-Versi interaktif sistem ini juga dapat diakses pada web portofolio:  
-[https://infinitenull.github.io/#shuna-ai](https://infinitenull.github.io/#shuna-ai)
+Versi interaktif sistem ini dapat diakses secara langsung pada GitHub Pages:  
+👉 **[https://infinitenull.github.io/SHUNA-AI/](https://infinitenull.github.io/SHUNA-AI/)**
 
 ---
 
